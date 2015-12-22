@@ -6,11 +6,13 @@ function hashPW(pwd) {
 }
 exports.signup = function(req, res) {
     var user = new User({username: req.body.username});
+    console.log(req.body);
     user.set('hashed_password', hashPW(req.body.password));
     user.set('email', req.body.email);
     user.save(function(err){ //将新创建的用户对象保存在数据库中
         if (err) {
-            res.sessor.error = err;
+            req.session.error = err;
+            req.session.msg = "Username Exists, Please log in or use another name !";
             res.redirect('/signup');
         } else {
             req.session.user = user.id;  //用户保存成功后，MongoDB创建的ID被保存在req.session.user中
@@ -24,8 +26,10 @@ exports.login = function(req, res) {
     User.findOne({username: req.body.username})
         .exec(function(err, user) {
             if (!user) {
+                console.log('User not found');
                 err = 'User Not Found';
             } else if (user.hashed_password === hashPW(req.body.password.toString())) {
+                console.log('Haha success');
                 req.session.regenerate(function(){
                     req.session.user = user.id;
                     req.session.username = user.username;
@@ -38,7 +42,7 @@ exports.login = function(req, res) {
             if (err) {
                 req.session.regenerate(function(){
                     req.session.msg = err;
-                    res.redirect('/');
+                    res.redirect('/login');
                 });
             }
         });
