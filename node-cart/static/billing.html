@@ -1,0 +1,44 @@
+<div id="billingContainer">
+    <h2>Card Info:</h2>
+    <label>Card </label>
+    <input type="radio" ng-model="customer.billing[0].cardtype"
+           value="Visa" /> Visa
+    <input type="radio" ng-model="customer.billing[0].cardtype"
+           value="MasterCard" /> MasterCard
+    <input type="radio" ng-model="customer.billing[0].cardtype"
+           value="Amex" /> Amex
+    <br>
+    <label>Name on Card </label>
+    <input type="text" ng-model="customer.billing[0].name" />
+    <br>
+    <label>Card Number </label>
+    <input type="text" ng-model="customer.billing[0].number" />
+    <br>
+    <label>Expires </label>
+    <select ng-model="customer.billing[0].expiremonth"
+            ng-options="m for m in months"></select>
+    <select ng-model="customer.billing[0].expireyear"
+            ng-options="y for y in years"></select>
+    <label>Card CCV </label>
+    <input class="security" type="text" ng-model="ccv" />
+    <h2>Billing Address</h2>
+    <label>Name </label>
+    <input type="text" ng-model="customer.billing[0].address[0].name" />
+    <label>Address </label>
+    <input type="text" ng-model="customer.billing[0].address[0].address" />
+    <label>City </label>
+    <input type="text" ng-model="customer.billing[0].address[0].city" />
+    <label>State </label>
+    <input type="text" ng-model="customer.billing[0].address[0].state" />
+    <label>Zipcode </label>
+    <input type="text" ng-model="customer.billing[0].address[0].zip" />
+    <hr>
+    <div>
+        <span class="button" ng-click="verifyBilling(ccv)">
+            Verify Billing
+        </span>
+        <span class="button" ng-click="setContent('products.html')">
+            Continue Shopping
+        </span>
+    </div>
+</div>
